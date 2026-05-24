@@ -1,0 +1,44 @@
+{
+  "name": "@chat-api/api",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage"
+  },
+  "dependencies": {
+    "@chat-api/db": "*",
+    "@chat-api/shared": "*",
+    "@sentry/node": "^7.99.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.2.0",
+    "ioredis": "^5.3.2",
+    "jsonwebtoken": "^9.0.2",
+    "pino": "^8.18.0",
+    "pino-http": "^9.0.0",
+    "zod": "^3.22.4",
+    "dotenv": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.11.5",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "pino-pretty": "^11.0.0",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  }
+}

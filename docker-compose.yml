@@ -1,0 +1,74 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: chatuser
+      POSTGRES_PASSWORD: chatpass
+      POSTGRES_DB: chatdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U chatuser -d chatdb']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://chatuser:chatpass@postgres:5432/chatdb
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: development
+      PORT: 3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ws:
+    build:
+      context: .
+      dockerfile: apps/ws/Dockerfile
+    ports:
+      - '4000:4000'
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://chatuser:chatpass@postgres:5432/chatdb
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: development
+      PORT: 4000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

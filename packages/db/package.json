@@ -1,0 +1,22 @@
+{
+  "name": "@chat-api/db",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate deploy",
+    "migrate:dev": "prisma migrate dev",
+    "studio": "prisma studio",
+    "seed": "ts-node src/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.8.1",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "paths": {
+      "@chat-api/db": ["../../packages/db/src"],
+      "@chat-api/shared": ["../../packages/shared/src"]
+    }
+  },
+  "include": ["src"]
+}
